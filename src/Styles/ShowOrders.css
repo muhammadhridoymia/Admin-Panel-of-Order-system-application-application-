@@ -1,0 +1,25 @@
+.orders-container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.orders-container h2 {
+  margin-bottom: 15px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.orders-table th {
+  background: #f4f6f8;
+}

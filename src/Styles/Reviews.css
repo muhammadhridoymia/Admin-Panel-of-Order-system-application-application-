@@ -1,0 +1,16 @@
+.review-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.review-card {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.review-card strong {
+  color: #333;
+}

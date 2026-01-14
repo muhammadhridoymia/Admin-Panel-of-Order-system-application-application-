@@ -1,0 +1,17 @@
+.category-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+}
+
+.category-list li {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}

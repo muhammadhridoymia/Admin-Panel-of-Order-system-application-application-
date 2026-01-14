@@ -1,0 +1,13 @@
+.deactive-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.deactive-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  background: #fdecea;
+  border-radius: 6px;
+  color: #c62828;
+}
