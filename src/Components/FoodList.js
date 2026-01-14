@@ -1,7 +1,9 @@
-import React from "react";
+import React ,{useState}from "react";
 import "../Styles/FoodList.css";
+import FoodForm from "../Form/AddFood";
 
 function FoodList() {
+  const [showForm, setShowForm] = useState(false);
 
     // data/foods.js
    const foods = [
@@ -113,8 +115,11 @@ function FoodList() {
 ];
 
   return (
+
     <div className="foodlist-con">
+      {showForm && <FoodForm close={() => setShowForm(false)} />}
       <h2>Food List</h2>
+      <button className="add-food-btn" onClick={() => setShowForm(!showForm)}>Add New Food</button>
 
       <table className="food-table">
         <thead>
@@ -138,9 +143,9 @@ function FoodList() {
               <td>{food.price}</td>
               <td>
                 {food.active ? (
-                  <span className="active">Active</span>
+                  <span className="active"><button>Active</button></span>
                 ) : (
-                  <span className="inactive">Deactive</span>
+                  <span className="inactive"><button>Deactive</button></span>
                 )}
               </td>
             </tr>

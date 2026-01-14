@@ -1,0 +1,85 @@
+.foodform-center {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.foodform-container {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+.close-btn {
+  background-color: #d31313;
+    color: white;
+    border: none;
+}
+.close-btn:hover {
+  cursor: pointer;
+  background-color: #ff4c4c;
+}
+.foodform-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.foodform {
+  display: flex;
+  flex-direction: column;
+}
+
+.foodform label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.foodform input[type="text"],
+.foodform input[type="number"],
+.foodform input[type="file"] {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.foodform input:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+.foodform button {
+  padding: 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.foodform button:hover {
+  background: #43a047;
+}
+
+/* Preview image */
+.food-preview {
+  margin-top: 10px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}

@@ -7,7 +7,15 @@
 .foodlist-con h2 {
   margin-bottom: 15px;
 }
-
+.add-food-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px
+}
 .food-table {
   width: 100%;
   border-collapse: collapse;
@@ -31,12 +39,26 @@
   border-radius: 5px;
 }
 
-.active {
-  color: green;
+.active  button{
+  background-color: green;
+  color: rgb(255, 255, 255);
   font-weight: bold;
+  border: none;
+}
+.active button:hover{
+  cursor: pointer;
+  background-color: rgb(45, 217, 128);
+  color: rgb(0, 0, 0);
 }
 
-.inactive {
-  color: red;
+.inactive button {
+  border: none;
+  background-color: rgb(255, 43, 43);
+  color: white;
   font-weight: bold;
+}
+.inactive button:hover {
+  cursor: pointer;
+  background-color: rgb(24, 167, 95);
+  color: rgb(255, 255, 255);
 }

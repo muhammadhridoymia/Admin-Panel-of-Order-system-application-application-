@@ -11,6 +11,7 @@ import "../Styles/Home.css";
 
 function Home() {
   const [activePage, setActivePage] = useState("Orders");
+  const [active, setActive] = useState(false);
 
   const menuItems = [
     { key: "Orders", label: "All Orders" },
@@ -46,7 +47,7 @@ function Home() {
           {menuItems.map(item => (
             <div
               key={item.key}
-              className="menu"
+              className={activePage === item.key ? "menu-active" : "menu"}
               onClick={() => setActivePage(item.key)}
             >
               {item.label}
