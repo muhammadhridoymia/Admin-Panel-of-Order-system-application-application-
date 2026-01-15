@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Form/FormStyle/AddFood.css";
+import "../FormStyle/Form.css";
 
 function FoodForm({ close }) {
   const [loading, setLoading] = useState(false);

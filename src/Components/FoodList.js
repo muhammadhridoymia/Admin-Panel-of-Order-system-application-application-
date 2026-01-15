@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/FoodList.css";
-import FoodForm from "../Form/AddFood";
+import FoodForm from "../Form/UI/AddFood";
 
 function FoodList() {
   const [showForm, setShowForm] = useState(false);
@@ -42,7 +42,7 @@ function FoodList() {
       {showForm && <FoodForm close={() => setShowForm(false)} />}
       <div className="foodlist-header">
         <h2>Food List</h2>
-      <button className="add-food-btn" onClick={() => setShowForm(!showForm)}>
+      <button className="add-food-btn" onClick={() => setShowForm(true)}>
         Add New Food
       </button>
       </div>
@@ -64,7 +64,7 @@ function FoodList() {
                 <img src={food.img} alt={food.name} />
               </td>
               <td>{food.name}</td>
-              <td>{food.price}</td>
+              <td> {food.price}</td>
               <td>
                 {food.display ? (
                   <span className="active">
