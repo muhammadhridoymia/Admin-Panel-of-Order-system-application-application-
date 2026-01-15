@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../Form/FormStyle/AddFood.css";
 
 function FoodForm({ close }) {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [food, setFood] = useState({
     name: "",
     price: "",
@@ -27,24 +29,43 @@ function FoodForm({ close }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    if (!food.name || !food.price || !food.img) {
+      alert("Please fill all fields");
+      setLoading(false);
+      return;
+    }
 
     const formData = new FormData();
-    formData.append("name", food.name);
+    formData.append("name", food.name.trim());
     formData.append("price", food.price);
-    formData.append("img", food.img); // file object
+    formData.append("img", food.img);
 
     try {
       const res = await fetch("http://localhost:5000/api/foods", {
         method: "POST",
-        body: formData,
+        body: formData, 
       });
-
+      if (!res.ok) {
+        const errorData = await res.json();
+        alert(errorData.message || "Failed to add food");
+        setLoading(false);
+        return;
+      }
       const data = await res.json();
-      console.log(data);
-      alert("Food submitted to server!");
-      setFood({ name: "", price: "", img: null, preview: null });
-    } catch (err) {
-      console.error(err);
+      setMessage(data.message || "Food added successfully");
+      setTimeout(() => setMessage(""), 3000);
+      setLoading(false);
+      setFood({
+        name: "",
+        price: "",
+        img: null,
+        preview: null,
+      });
+    } catch (error) {
+      console.error("Upload error:", error.message);
+      alert(error.message);
     }
   };
 
@@ -55,6 +76,7 @@ function FoodForm({ close }) {
           X
         </button>
         <h2>Add New Food</h2>
+        <h3 className="message">{message}</h3>
 
         <form onSubmit={handleSubmit} className="foodform">
           <label>
@@ -94,7 +116,7 @@ function FoodForm({ close }) {
             <img src={food.preview} alt="Preview" className="food-preview" />
           )}
 
-          <button type="submit">Submit Food</button>
+          <button type="submit">{loading ? <div className="spinner"></div> : "Add Food"}</button>
         </form>
       </div>
     </div>
