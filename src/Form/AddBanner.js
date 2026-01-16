@@ -1,36 +1,27 @@
 import React, { useState } from "react";
 
-function ChangeImg({ close,id ,statusType}) {
+function AddBanner({ close }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [food, setFood] = useState({
     img: null,
     preview: null,
   });
-
-  const Food=`http://localhost:5000/api/change/food/img`;
-  const Category=`http://localhost:5000/api/change/category/img`;
-
-  const url = statusType === "food" ? Food : Category;  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!id || !food.img) {
-      return alert("All fields are required");
+    if (!food.img) {
+      return alert("Image is required");
     }
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("id", id);
     formData.append("img", food.img);
-
     try {
-      const res = await fetch(url, {
+      const res = await fetch("http://localhost:5000/api/create/banner", {
         method: "POST",
         body: formData,
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
 
@@ -43,7 +34,6 @@ function ChangeImg({ close,id ,statusType}) {
       setLoading(false);
     }
   };
-
   return (
     <div className="modal-overlay">
       <div className="modal">
@@ -75,7 +65,7 @@ function ChangeImg({ close,id ,statusType}) {
           )}
 
           <button disabled={loading}>
-            {loading ? "Uploading..." : "Add Food"}
+            {loading ? "Uploading..." : "Add Banner"}
           </button>
         </form>
 
@@ -85,4 +75,4 @@ function ChangeImg({ close,id ,statusType}) {
   );
 }
 
-export default ChangeImg;
+export default AddBanner;

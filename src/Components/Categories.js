@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import "../Styles/Categories.css";
 import AddCategories from "../Form/AddCategories";
 import CategoriesFoods from "./CategoriesFoods";
+import ChangeImg from "../Form/ChangeImg";
+import DeletePopup from "../PopUp/DeletePopUp";
+import { Delete } from "../Toggle/StatusChangs";
+
 
 function Categories() {
   const [showFoods, setShowFoods] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [imgLoading, setImgLoading] = useState(null);
+  const [showImg, setShowImg] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
+  const [id,setid] = useState(null);
 
   const fetchCategories = async () => {
     try {
@@ -29,57 +35,17 @@ function Categories() {
     setShowFoods(true);
   };
 
-  /* -------- REMOVE CATEGORY -------- */
-  const removeCategory = async (id) => {
-    if (!window.confirm("Delete this category?")) return;
-
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/categories/${id}`,
-        { method: "DELETE" }
-      );
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-
-      setCategories((prev) => prev.filter((c) => c._id !== id));
-    } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  /* -------- CHANGE IMAGE -------- */
-  const changeImage = async (id, file) => {
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("img", file);
-
-    try {
-      setImgLoading(id);
-      const res = await fetch(
-        `http://localhost:5000/api/categories/${id}/image`,
-        {
-          method: "PATCH",
-          body: formData,
-        }
-      );
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-
-      setCategories((prev) =>
-        prev.map((c) =>
-          c._id === id ? { ...c, img: data.img } : c
-        )
-      );
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setImgLoading(null);
-    }
-  };
-
   return (
     <div className="category-page">
+      {deleteShow && (
+        <DeletePopup
+          title="Confirm Delete"
+          message="Are you sure you want to delete this category?"
+          onCancel={() => setDeleteShow(false)}
+          onConfirm={() => Delete(id, setCategories, setDeleteShow, "category")}
+        />
+      )}
+      {showImg && <ChangeImg id={id} close={() => setShowImg(false)} statusType="category" />}
       {showFoods && (
         <CategoriesFoods
           close={() => setShowFoods(false)}
@@ -111,21 +77,13 @@ function Categories() {
             <div className="category-actions">
               <button
                 className="danger"
-                onClick={() => removeCategory(category._id)}
+                onClick={()=> {setDeleteShow(true);setid(category._id);}}
               >
-                Remove
+                {deleteShow ? "Deleting..." : "Delete"}
               </button>
 
-              <label className="secondary">
-                {imgLoading === category._id ? "Uploading..." : "Change Image"}
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*"
-                  onChange={(e) =>
-                    changeImage(category._id, e.target.files[0])
-                  }
-                />
+              <label className="secondary" onClick={() => { setShowImg(true); setid(category._id); }}>
+                Change
               </label>
             </div>
           </div>

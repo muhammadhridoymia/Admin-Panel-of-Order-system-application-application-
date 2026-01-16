@@ -3,6 +3,8 @@ import "../Styles/FoodList.css";
 import FoodForm from "../Form/AddFood";
 import { toggle } from "../Toggle/StatusChangs";
 import ChangeImg from "../Form/ChangeImg";
+import DeletePopup from "../PopUp/DeletePopUp";
+import { Delete } from "../Toggle/StatusChangs";
 
 function FoodList() {
   const [showForm, setShowForm] = useState(false);
@@ -10,8 +12,8 @@ function FoodList() {
   const [loading, setLoading] = useState(true);
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ name: "", price: "" });
-  const [imageLoading, setImageLoading] = useState(null);
   const [changeImage, setChangeImage] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
   const [id,setid] = useState(null);
 
   //Loading 
@@ -48,7 +50,15 @@ function FoodList() {
 
   return (
     <div className="foodlist-card">
-      {changeImage && <ChangeImg id={id} close={() => setChangeImage(false)} />}
+      {deleteShow && (
+        <DeletePopup
+          title="Confirm Delete"
+          message="Are you sure you want to delete this food?"
+          onCancel={() => setDeleteShow(false)}
+          onConfirm={() => Delete(id, setFoods, setDeleteShow, "food")}
+        />
+      )}
+      {changeImage && <ChangeImg id={id} close={() => setChangeImage(false)} statusType="food" />}
       {showForm && <FoodForm close={() => setShowForm(false)} />}
 
       <div className="foodlist-header">
@@ -67,6 +77,7 @@ function FoodList() {
             <th>Display</th>
             <th>Popular</th>
             <th>Action</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
@@ -143,6 +154,11 @@ function FoodList() {
                     ✏️ Edit
                   </button>
                 )}
+              </td>
+              <td className="delete-cell" onClick={() => {setDeleteShow(true);setid(food._id);}}>
+                <button className="danger">
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

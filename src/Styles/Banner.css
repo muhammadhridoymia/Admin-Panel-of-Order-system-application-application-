@@ -1,0 +1,51 @@
+.banner-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.banner-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.banner-table th,
+.banner-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.banner-img {
+  width: 180px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.status-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.status-btn.active {
+  background: #2e7d32;
+  color: white;
+}
+
+.status-btn.inactive {
+  background: #c62828;
+  color: white;
+}
+
+.delete-btn {
+  background: #e53935;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
