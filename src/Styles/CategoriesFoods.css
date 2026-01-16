@@ -92,3 +92,13 @@
   color: #666;
   margin: 0;
 }
+/* RightSide Remove button */
+.Remove-btn {
+  margin-left: auto;
+  padding: 6px 12px;
+  background: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -29,14 +29,15 @@ function CategoriesFoods({close, Data}) {
   return (
     <div className="categories-foods">
         <div className="categories-foods-center">
-            <button className="close-btn" onClick={close}>X</button>
             <h2>{Data?.name}</h2>
+            <button className="close-btn" onClick={close}>X</button>
             <div className="categories-list">
                 {Foods.map(food => (
                     <div key={food.id} className="category-box">
                         <img src={food.img} alt={food.name} />
                         <h3>{food.name}</h3>
                         <p>{food.description}</p>
+                        <button className='Remove-btn'>Remove</button>
                     </div>
                 ))}
             </div>
