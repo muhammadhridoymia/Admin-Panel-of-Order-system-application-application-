@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/FoodList.css";
 import FoodForm from "../Form/AddFood";
+import { toggle } from "../Toggle/StatusChangs";
+import ChangeImg from "../Form/ChangeImg";
 
 function FoodList() {
   const [showForm, setShowForm] = useState(false);
@@ -9,6 +11,11 @@ function FoodList() {
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ name: "", price: "" });
   const [imageLoading, setImageLoading] = useState(null);
+  const [changeImage, setChangeImage] = useState(false);
+  const [id,setid] = useState(null);
+
+  //Loading 
+  const [loadingstatus, setLoadingstatus] = useState({popular: false, display: false});
 
   const fetchFoods = async () => {
     try {
@@ -41,6 +48,7 @@ function FoodList() {
 
   return (
     <div className="foodlist-card">
+      {changeImage && <ChangeImg id={id} close={() => setChangeImage(false)} />}
       {showForm && <FoodForm close={() => setShowForm(false)} />}
 
       <div className="foodlist-header">
@@ -56,7 +64,7 @@ function FoodList() {
             <th>Image</th>
             <th>Name</th>
             <th>Price (৳)</th>
-            <th>Status</th>
+            <th>Display</th>
             <th>Popular</th>
             <th>Action</th>
           </tr>
@@ -68,9 +76,8 @@ function FoodList() {
               <td className="image-cell">
                 <img src={food.img} alt={food.name} />
 
-                <label className="change-img-btn">
-                  {imageLoading === food._id ? "Uploading..." : "Change"}
-                  <input type="file" hidden accept="image/*" onChange={""} />
+                <label className="change-img-btn" onClick={() => { setChangeImage(true); setid(food._id); }}>
+                  Change
                 </label>
               </td>
 
@@ -106,9 +113,9 @@ function FoodList() {
                   className={`status-btn ${
                     food.display ? "active" : "inactive"
                   }`}
-                  onClick={""}
+                  onClick={() => toggle(food._id, setFoods, setLoadingstatus,"display")}
                 >
-                  {food.display ? "Active" : "Inactive"}
+                  {loadingstatus.display ? "Updating..." : food.display ? "Yes" : "No"}
                 </button>
               </td>
               
@@ -117,9 +124,9 @@ function FoodList() {
                   className={`status-btn ${
                     food.popular ? "active" : "inactive"
                   }`}
-                  onClick={""}
+                  onClick={() => toggle(food._id, setFoods, setLoadingstatus,"popular")}
                 >
-                  {food.popular ? "Active" : "Inactive"}
+                  {loadingstatus.popular ? "Updating..." : food.popular ? "Yes" : "No"}
                 </button>
               </td>
 
