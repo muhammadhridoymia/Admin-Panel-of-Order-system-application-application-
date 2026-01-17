@@ -1,51 +1,111 @@
+/* Main card */
 .banner-card {
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
+/* Header */
+.foodlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.foodlist-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Primary button */
+.primary-btn {
+  background: #1976d2;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #155a9c;
+}
+
+/* Table */
 .banner-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
 }
 
 .banner-table th,
 .banner-table td {
-  padding: 12px;
+  padding: 14px;
   text-align: center;
   border-bottom: 1px solid #eee;
 }
 
-.banner-img {
-  width: 180px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
+.banner-table th {
+  font-weight: 600;
+  color: #444;
 }
 
+/* Banner image */
+.banner-img {
+  width: 500px;       /* bigger width */
+  height: 220px;      /* bigger height */
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+
+/* Status button */
 .status-btn {
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 20px;
   border: none;
+  font-size: 13px;
   cursor: pointer;
 }
 
 .status-btn.active {
   background: #2e7d32;
-  color: white;
+  color: #fff;
 }
 
 .status-btn.inactive {
   background: #c62828;
-  color: white;
+  color: #fff;
 }
 
+/* Delete button */
 .delete-btn {
   background: #e53935;
-  color: white;
-  padding: 6px 12px;
+  color: #fff;
+  padding: 6px 14px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #c62828;
+}
+
+/* Loading text */
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
+}
+
+/* No banners found message */
+.no-banners {
+  text-align: center;
+  padding: 40px;  
+  font-size: 16px;
+  color: #b1aeae;
+  background-color: #bc6161;
 }

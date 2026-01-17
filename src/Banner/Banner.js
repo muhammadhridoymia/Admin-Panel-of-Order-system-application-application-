@@ -2,22 +2,35 @@ import React, { useEffect, useState } from "react";
 import DeletePopup from "../PopUp/DeletePopUp";
 import AddBanner from "../Form/AddBanner";
 import "../Styles/Banner.css";
+import { Delete ,toggle} from "../Toggle/StatusChangs";
 
 function BannerList() {
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  const [ShowDeleteUI, setShowDeleteUI] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [NotFoundMessage, setNotFoundMessage] = useState();
+  const [IDforStatus, setIDforStatus] = useState(null);
 
   // Fetch banners
   const fetchBanners = async () => {
+    setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/banners");
+      const res = await fetch("http://localhost:5000/api/get/banners");
       const data = await res.json();
-      if (data.success) setBanners(data.banners);
+      if (data.success){
+        setBanners(data.banners);
+        setLoading(false);
+        console.log("Fetched banners:", data.banners);
+      }
+      else {
+        setNotFoundMessage(data.message ||"No banners");
+        setBanners([]);
+        setLoading(false);
+      }
     } catch (err) {
-      console.error(err);
+      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -51,17 +64,17 @@ function BannerList() {
           {banners.map(banner => (
             <tr key={banner._id}>
               <td>
-                <img src={banner.image} alt="banner" className="banner-img" />
+                <img src={banner.img} alt="banner" className="banner-img" />
               </td>
 
               <td>
                 <button
                   className={`status-btn ${
-                    banner.display ? "active" : "inactive"
-                  }`}
-                  onClick={''}
+                    banner.active ? "active" : "inactive"
+                  }` }
+                  onClick={() => toggle(banner._id, setBanners, setIDforStatus, "active")}
                 >
-                  {banner.display ? "Active" : "Inactive"}
+                  {IDforStatus===banner._id ? "Updating..." : banner.active ? "Yes" : "No"}
                 </button>
               </td>
 
@@ -70,10 +83,10 @@ function BannerList() {
                   className="delete-btn"
                   onClick={() => {
                     setDeleteId(banner._id);
-                    setShowDelete(true);
+                    setShowDeleteUI(true);
                   }}
                 >
-                  🗑 Delete
+                  Delete
                 </button>
               </td>
             </tr>
@@ -81,13 +94,15 @@ function BannerList() {
         </tbody>
       </table>
 
-      {showDelete && (
+      {ShowDeleteUI && (
         <DeletePopup
           title="Delete Banner"
           message="This banner will be permanently deleted."
-          onCancel={() => setShowDelete(false)}
+          onCancel={() => setShowDeleteUI(false)}
+          onConfirm={() => Delete(deleteId, setBanners, setShowDeleteUI, "banner")}
         />
       )}
+      {NotFoundMessage && <p className="no-banners">{NotFoundMessage}</p>}
     </div>
   );
 }

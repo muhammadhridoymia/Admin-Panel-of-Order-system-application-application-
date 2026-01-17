@@ -17,7 +17,7 @@ function FoodList() {
   const [id,setid] = useState(null);
 
   //Loading 
-  const [loadingstatus, setLoadingstatus] = useState({popular: false, display: false});
+  const [IDforStatus, setIDforStatus] = useState(null);
 
   const fetchFoods = async () => {
     try {
@@ -124,9 +124,9 @@ function FoodList() {
                   className={`status-btn ${
                     food.display ? "active" : "inactive"
                   }`}
-                  onClick={() => toggle(food._id, setFoods, setLoadingstatus,"display")}
+                  onClick={() => toggle(food._id, setFoods, setIDforStatus, "display")}
                 >
-                  {loadingstatus.display ? "Updating..." : food.display ? "Yes" : "No"}
+                  {IDforStatus===food._id ? "Updating..." : food.display ? "Yes" : "No"}
                 </button>
               </td>
               
@@ -135,9 +135,9 @@ function FoodList() {
                   className={`status-btn ${
                     food.popular ? "active" : "inactive"
                   }`}
-                  onClick={() => toggle(food._id, setFoods, setLoadingstatus,"popular")}
+                  onClick={() => toggle(food._id, setFoods, setIDforStatus, "popular")}
                 >
-                  {loadingstatus.popular ? "Updating..." : food.popular ? "Yes" : "No"}
+                  {IDforStatus===food._id ? "Updating..." : food.popular ? "Yes" : "No"}
                 </button>
               </td>
 
