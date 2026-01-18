@@ -25,7 +25,7 @@ function DeactiveFoods() {
       const res = await fetch("http://localhost:5000/api/get/undisplayed/foods");
       const data = await res.json();
       if (data.success){
-        setFoods(data.foods);
+        setFoods(data.unDisplayedFoods);
         
       }else {
         setNotFoundMessage(data.message ||"No deactive foods");
@@ -52,7 +52,7 @@ function DeactiveFoods() {
     setEditData({ name: "", price: "" });
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="loading"></div>;
 
   return (
     <div className="foodlist-card">
@@ -166,8 +166,8 @@ function DeactiveFoods() {
             </tr>
           ))}
         </tbody>
-        {NotFoundMessage && <p className="not-found">{NotFoundMessage}</p>}
       </table>
+      {NotFoundMessage && <p className="not-found">{NotFoundMessage}</p>}
     </div>
   );
 }

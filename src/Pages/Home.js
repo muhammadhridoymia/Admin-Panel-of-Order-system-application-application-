@@ -11,7 +11,6 @@ import "../Styles/Home.css";
 
 function Home() {
   const [activePage, setActivePage] = useState("Orders");
-  const [active, setActive] = useState(false);
 
   const menuItems = [
     { key: "Orders", label: "All Orders" },

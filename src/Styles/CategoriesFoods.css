@@ -102,3 +102,10 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.not-found  {
+  text-align: center;
+  padding: 40px;  
+  font-size: 16px;
+  color: #b1aeae;
+  background-color: #bc6161;
+}

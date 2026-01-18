@@ -1,50 +1,48 @@
 import React, { useState } from "react";
 
-function ChangeImg({ close,id ,statusType}) {
+function UserForm({ close }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [food, setFood] = useState({
+
+  const [user, setUser] = useState({
+    name: "",
+    password: "",
     img: null,
     preview: null,
   });
 
-  const User=`http://localhost:5000/api/change/user/img`;
-  const Food=`http://localhost:5000/api/change/food/img`;
-  const Category=`http://localhost:5000/api/change/category/img`;
-
-  const urlMap={
-    food:Food,
-    category:Category,
-    user:User,
-  };
-
-  const url=urlMap[statusType]||Food;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!id || !food.img) {
+    if (!user.name || !user.password || !user.img) {
       return alert("All fields are required");
     }
+
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("id", id);
-    formData.append("img", food.img);
-    console.log("Image data", formData);
+    formData.append("name", user.name.trim());
+    formData.append("password", user.password);
+    formData.append("img", user.img);
+
+    console.log("userdata", user);
 
     try {
-      const res = await fetch(url, {
+      const res = await fetch("http://localhost:5000/api/add/user", {
         method: "POST",
         body: formData,
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-
-      setMessage(data.message || "Image successfully");
-      setFood({ name: "", price: "", img: null, preview: null });
+      if(data.success){
+        setMessage(data.message || "User added successfully");
+      setUser({ name: "", password: "", img: null, preview: null });
       setTimeout(() => setMessage(""), 3000);
+      }
+      else{
+        setMessage(data.message || "Failed to add user");
+      setTimeout(() => setMessage(""), 3000);
+      }
     } catch (err) {
       alert(err.message);
     } finally {
@@ -57,33 +55,44 @@ function ChangeImg({ close,id ,statusType}) {
       <div className="modal">
         {/* HEADER */}
         <div className="modal-header">
-          <h2>Add Image</h2>
+          <h2>Create User</h2>
           <button onClick={close}>✕</button>
         </div>
 
         {/* FORM */}
         <form className="form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="User name"
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Password"
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+          />
+
           <label className="upload-box">
             Upload Image
             <input
               type="file"
               hidden
               onChange={(e) =>
-                setFood({
-                  ...food,
+                setUser({
+                  ...user,
                   img: e.target.files[0],
                   preview: URL.createObjectURL(e.target.files[0]),
                 })
               }
             />
           </label>
-
-          {food.preview && (
-            <img src={food.preview} className="preview" alt="preview" />
+          {user.preview && (
+            <img src={user.preview} className="preview" alt="preview" />
           )}
-
           <button disabled={loading}>
-            {loading ? "Uploading..." : "Add Food"}
+            {loading ? "Uploading..." : "Add User"}
           </button>
         </form>
 
@@ -93,4 +102,4 @@ function ChangeImg({ close,id ,statusType}) {
   );
 }
 
-export default ChangeImg;
+export default UserForm;

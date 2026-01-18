@@ -27,7 +27,6 @@
   width: 100%;
   border-collapse: collapse;
 }
-
 .food-table th {
   background: #f5f7fa;
   padding: 12px;
@@ -103,9 +102,20 @@
   border-radius: 6px;
 }
 
-.loading {
+.loading{
   text-align: center;
   font-size: 18px;
+  border: 4px solid #f3f3f3; 
+  border-top: 4px solid #555;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); } 
 }
 .status-btn {
   padding: 6px 14px;
@@ -155,4 +165,26 @@
   background: #1976d2;
   color: white;
   border-color: #1976d2;
+}
+.active-btn {
+  background: #439b4a;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.active-btn:hover {
+  background: #2e7d32;
+}
+.blocked-btn {
+  background: #c62828;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.blocked-btn:hover {
+  background: #b71c1c;
 }

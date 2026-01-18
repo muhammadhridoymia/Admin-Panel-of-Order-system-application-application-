@@ -51,7 +51,7 @@ function PopularFoods() {
     setEditData({ name: "", price: "" });
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="loading"></div>;
 
   return (
     <div className="foodlist-card">
@@ -165,8 +165,8 @@ function PopularFoods() {
             </tr>
           ))}
         </tbody>
-        {NotFoundMessage && <p className="not-found">{NotFoundMessage}</p>}
       </table>
+      {NotFoundMessage && <p className="not-found">{NotFoundMessage}</p>}
     </div>
   );
 }
