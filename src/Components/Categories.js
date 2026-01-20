@@ -65,8 +65,7 @@ function Categories() {
       <div className="categories-container">
         {categories.map((category) => (
           <div key={category._id} className="category-card">
-            <div
-              className="image-wrapper"
+            <div className="image-wrapper"
               onClick={() => openFoods(category)}
             >
               <img src={category.img} alt={category.name} />
@@ -75,6 +74,9 @@ function Categories() {
             <h3>{category.name}</h3>
 
             <div className="category-actions">
+              <button className={category.display ? "danger" : "secondary"} onClick={() => {setDeleteShow(true);setid(category._id);}}>
+                {category.display ? "Hide" : "Show"}
+              </button>
               <button
                 className="danger"
                 onClick={()=> {setDeleteShow(true);setid(category._id);}}

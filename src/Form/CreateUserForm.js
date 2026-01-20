@@ -5,7 +5,8 @@ function UserForm({ close }) {
   const [message, setMessage] = useState("");
 
   const [user, setUser] = useState({
-    name: "",
+    name:"",
+    phone: "",
     password: "",
     img: null,
     preview: null,
@@ -14,14 +15,15 @@ function UserForm({ close }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user.name || !user.password || !user.img) {
+    if (!user.name ||!user.phone || !user.password || !user.img) {
       return alert("All fields are required");
     }
 
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("name", user.name.trim());
+    formData.append("name",user.name)
+    formData.append("phone", user.phone);
     formData.append("password", user.password);
     formData.append("img", user.img);
 
@@ -36,7 +38,7 @@ function UserForm({ close }) {
       const data = await res.json();
       if(data.success){
         setMessage(data.message || "User added successfully");
-      setUser({ name: "", password: "", img: null, preview: null });
+      setUser({ name:"",phone: "", password: "", img: null, preview: null });
       setTimeout(() => setMessage(""), 3000);
       }
       else{
@@ -63,9 +65,15 @@ function UserForm({ close }) {
         <form className="form" onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="User name"
+            placeholder="Your Name"
             value={user.name}
             onChange={(e) => setUser({ ...user, name: e.target.value })}
+          />
+          <input
+            type="Number"
+            placeholder="Phone Number"
+            value={user.phone}
+            onChange={(e) => setUser({ ...user, phone: e.target.value })}
           />
           <input
             type="text"

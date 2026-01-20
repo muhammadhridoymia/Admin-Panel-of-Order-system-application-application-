@@ -74,7 +74,7 @@ function BannerList() {
                   }` }
                   onClick={() => toggle(banner._id, setBanners, setIDforStatus, "active")}
                 >
-                  {IDforStatus===banner._id ? "Updating..." : banner.active ? "Yes" : "No"}
+                  {IDforStatus===banner._id ? "Updating..." : banner.active? "Yes" : "No"}
                 </button>
               </td>
 

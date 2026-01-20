@@ -44,7 +44,7 @@ function ChangeImg({ close,id ,statusType}) {
 
       setMessage(data.message || "Image successfully");
       setFood({ name: "", price: "", img: null, preview: null });
-      setTimeout(() => setMessage(""), 3000);
+      setTimeout(() => {setMessage(""); close()}, 3000);
     } catch (err) {
       alert(err.message);
     } finally {

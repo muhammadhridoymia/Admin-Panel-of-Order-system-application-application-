@@ -9,7 +9,7 @@ export const toggle = async (id, setData, setIDforStatus, statusType) => {
   const statusUrlMap = {
     display: FoodDisplay,
     popular: FoodPopular,
-    banner: BannerActive,
+    active: BannerActive,
   };
   const url = statusUrlMap[statusType] || UserBlock;
 

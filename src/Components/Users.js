@@ -5,13 +5,14 @@ import ChangeImg from "../Form/ChangeImg";
 import DeletePopup from "../PopUp/DeletePopUp";
 import { Delete } from "../Toggle/StatusChangs";
 import { toggle } from "../Toggle/StatusChangs";
+import Login from "./Login";
 
 function Users() {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editId, setEditId] = useState(null);
-  const [editData, setEditData] = useState({ name: "", price: "" });
+  const [editData, setEditData] = useState({ name: "", phone: "" });
   const [changeImage, setChangeImage] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
   const [id,setid] = useState(null);
@@ -41,9 +42,9 @@ function Users() {
     fetchFoods();
   }, []);
 
-  const startEdit = (food) => {
-    setEditId(food._id);
-    setEditData({ name: food.name, price: food.price });
+  const startEdit = (user) => {
+    setEditId(user._id);
+    setEditData({ name: user.name, phone: user.phone });
   };
 
   const cancelEdit = () => {
@@ -55,6 +56,7 @@ function Users() {
 
   return (
     <div className="foodlist-card">
+      <Login />
       {deleteShow && (
         <DeletePopup
           title="Confirm Delete"
@@ -78,6 +80,7 @@ function Users() {
           <tr>
             <th>Image</th>
             <th>Name</th>
+            <th>Phone</th>
             <th>Action</th>
             <th>Block</th>
             <th>Delete</th>
@@ -108,6 +111,19 @@ function Users() {
                 )}
               </td>
 
+              <td>
+                {editId === user._id ? (
+                  <input
+                    value={editData.phone}
+                    onChange={(e) =>
+                      setEditData({ ...editData, phone: e.target.value })
+                    }
+                  />
+                ) : (
+                  user.phone
+                )}
+              </td>
+
               <td className="action-cell">
                 {editId === user._id ? (
                   <>
@@ -127,7 +143,7 @@ function Users() {
                   toggle(user._id, setUsers, setIDforStatus, "block");
 
                 }}>
-                  {IDforStatus === user._id ? "Updating..." : user.block ? "Unblock" : "Block"}
+                  {IDforStatus === user._id ? "Updating..." : user.block ? "Yes" : "No"}
                 </button>
               </td>
               <td className="delete-cell" onClick={() => {setDeleteShow(true);setid(user._id);}}>
