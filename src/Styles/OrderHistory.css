@@ -1,0 +1,88 @@
+.history-container {
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  background: #f5f6fa;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #2d3436;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.order-date {
+  font-size: 13px;
+  color: #636e72;
+}
+
+.status.completed {
+  background: #00b894;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card-items {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+}
+.card-item div{
+    background-color: #dcfaea;
+}
+
+.item-name {
+  flex: 2;
+}
+
+.item-quantity {
+  flex: 1;
+  text-align: center;
+}
+
+.item-total {
+  flex: 1;
+  text-align: right;
+  font-weight: 500;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 15px;
+}

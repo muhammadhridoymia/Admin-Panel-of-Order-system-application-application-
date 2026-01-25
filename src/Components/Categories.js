@@ -21,6 +21,7 @@ function Categories() {
       const res = await fetch("http://localhost:5000/api/get/categories");
       const data = await res.json();
       if (data.success) setCategories(data.categories);
+      console.log("catagory data:",data)
     } catch (err) {
       console.error(err);
     }

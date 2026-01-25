@@ -7,6 +7,8 @@ import DeactiveFoods from "../Components/DeactiveFoods";
 import Banners from "../Components/Banners";
 import Reviews from "../Components/Reviews";
 import Users from "../Components/Users";
+import OrderHistory from "../Components/OrderHistory";
+import DailySales from "../Components/DailySales";
 import "../Styles/Home.css";
 
 function Home() {
@@ -14,6 +16,7 @@ function Home() {
 
   const menuItems = [
     { key: "Orders", label: "All Orders" },
+    { key: "history",label:"Order History"},
     { key: "Foods", label: "Foods" },
     { key: "Categorys", label: "Categorys" },
     { key: "Popular", label: "Popular" },
@@ -21,11 +24,13 @@ function Home() {
     { key: "Banner", label: "Banner" },
     { key: "Reviews", label: "Reviews" },
     { key: "Users", label: "Users" },
+    { key: "DailySales",label:"Daily Sales"}
   ];
 
   const renderPage = () => {
     switch (activePage) {
       case "Orders": return <Orders />;
+      case "history":return<OrderHistory/>
       case "Foods": return <FoodList />;
       case "Categorys": return <Categories />;
       case "Popular": return <PopularFoods />;
@@ -33,6 +38,7 @@ function Home() {
       case "Banner": return <Banners />;
       case "Reviews": return <Reviews />;
       case "Users": return <Users />;
+      case "DailySales": return <DailySales/>
       default: return null;
     }
   };

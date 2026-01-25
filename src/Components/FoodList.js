@@ -5,6 +5,9 @@ import { toggle } from "../Toggle/StatusChangs";
 import ChangeImg from "../Form/ChangeImg";
 import DeletePopup from "../PopUp/DeletePopUp";
 import { Delete } from "../Toggle/StatusChangs";
+import { io } from "socket.io-client";
+
+
 
 function FoodList() {
   const [showForm, setShowForm] = useState(false);
@@ -16,6 +19,14 @@ function FoodList() {
   const [deleteShow, setDeleteShow] = useState(false);
   const [id,setid] = useState(null);
 
+  const socket = io("http://localhost:5000");
+
+  useEffect(()=>{
+    socket.on("connect", () => {
+
+},[]);
+
+  })
   //Loading 
   const [IDforStatus, setIDforStatus] = useState(null);
 

@@ -1,25 +1,88 @@
 .orders-container {
-  background: #ffffff;
   padding: 20px;
-  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  background: #f0f2f5;
 }
 
-.orders-container h2 {
-  margin-bottom: 15px;
+h2 {
+  margin-bottom: 20px;
+  color: #2d3436;
 }
 
 .orders-table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .orders-table th,
 .orders-table td {
+  padding: 12px 10px;
   border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+  vertical-align: top;
 }
 
 .orders-table th {
-  background: #f4f6f8;
+  background: #f4f4f4;
+  text-align: left;
 }
+
+.item-row {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.item-row.new-item {
+  background: #fff8e1;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.badge-new {
+  background: #e17055;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  margin-left: 6px;
+}
+
+.item-price {
+  font-size: 13px;
+  color: #636e72;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+}
+
+.status.pending { background: #ffeaa7; }
+.status.accepted { background: #0984e3; color: #fff; }
+.status.completed { background: #00b894; color: #fff; }
+.status.cancelled { background: #d63031; color: #fff; }
+
+.actions button {
+  margin: 2px;
+  padding: 6px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.actions button:hover { opacity: 0.8; }
+
+.actions .accept { background: #0984e3; color: #fff; }
+.actions .completed { background: #00b894; color: #fff; }
+.actions .cancel { background: #d63031; color: #fff; }
+
+.message { background: #fd79a8; color: #fff; padding: 6px 10px; border-radius: 4px; }
+.voice { background: #6c5ce7; color: #fff; padding: 6px 10px; border-radius: 4px; }
+.bill { background: #fdcb6e; color: #fff; padding: 6px 10px; border-radius: 4px; }
