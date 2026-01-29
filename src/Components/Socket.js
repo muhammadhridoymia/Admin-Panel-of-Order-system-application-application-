@@ -9,11 +9,3 @@ export const sendUpdate=(userId)=>{
       socket.emit("sendupdate",{userId});
 
 }
-
-// export const OrderSubmited=({fetchOrders})=>{
-//     fetchOrders()
-// }
-
-// socket.on("orderSubmited",async()=>{
-//     OrderSubmited()
-// })

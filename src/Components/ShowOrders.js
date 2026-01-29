@@ -1,10 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import Ring from "../Audio/ring.mp3";
-import { socket,sendUpdate } from "./Socket";
 import "../Styles/ShowOrders.css";
 
+import { io } from "socket.io-client";
 
 function Orders() {
+
+  //Socket
+  const socket = io("http://localhost:5000");
+
+  const sendUpdate = (userId) => {
+    socket.emit("sendupdate", { userId });
+  };
+
   const [newAdded, setNewAdded] = useState(false);
   const [startAuido, setStartAudio] = useState(false);
   const [orders, setOrders] = useState([]);
@@ -20,7 +28,7 @@ function Orders() {
 
       const ordersData = data.orders || [];
       setOrders(ordersData);
-      console.log(ordersData)
+      console.log(ordersData);
 
       const shouldRing = ordersData.some(
         (order) =>
@@ -38,18 +46,11 @@ function Orders() {
 
   useEffect(() => {
     fetchOrders();
+    socket.emit("joinRoom", "admin");
+    socket.on("orderSubmited",()=>{
+      fetchOrders()
+    })
   }, []);
-
-  //Socket
-useEffect(() => {
-  socket.on("orderSubmited", fetchOrders);
-
-  return () => {
-    socket.off("orderSubmited", fetchOrders);
-  };
-}, []);
-
-
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -67,7 +68,7 @@ useEffect(() => {
     fetchOrders();
   };
 
-  const updateStatus = async (orderId, status,userId) => {
+  const updateStatus = async (orderId, status, userId) => {
     setupdateloading(true);
     try {
       const res = await fetch(
@@ -79,12 +80,12 @@ useEffect(() => {
         },
       );
       const data = await res.json();
-      if (data.success){ 
-        fetchOrders()
+      if (data.success) {
+        fetchOrders();
         //socket
-        sendUpdate(userId)
-        console.log("userId:",userId)
-      };
+        sendUpdate(userId);
+        console.log("userId:", userId);
+      }
     } catch (error) {
       console.error("Status update failed", error);
     } finally {
@@ -92,7 +93,7 @@ useEffect(() => {
     }
   };
 
-  const updateNewAdded = async (orderId,userId) => {
+  const updateNewAdded = async (orderId, userId) => {
     setupdateloading(true);
     try {
       const res = await fetch(
@@ -104,9 +105,9 @@ useEffect(() => {
       );
       const data = await res.json();
       if (data.success) {
-        fetchOrders()
-        sendUpdate(userId)
-      };
+        fetchOrders();
+        sendUpdate(userId);
+      }
     } catch (error) {
       console.error("Status update failed", error);
     } finally {
@@ -169,26 +170,37 @@ useEffect(() => {
 
               <td className="actions">
                 <button
-                  onClick={() => updateStatus(order._id, "ACCEPTED",order.userId)}
+                  onClick={() =>
+                    updateStatus(order._id, "ACCEPTED", order.userId)
+                  }
                   className="accept"
                 >
                   Accept
                 </button>
                 <button
-                  onClick={() => updateStatus(order._id, "COMPLETED",order.userId)}
+                  onClick={() =>
+                    updateStatus(order._id, "COMPLETED", order.userId)
+                  }
                   className="completed"
                 >
                   Complete
                 </button>
                 <button
-                  onClick={() => updateStatus(order._id, "CANCELLED",order.userId)}
+                  onClick={() =>
+                    updateStatus(order._id, "CANCELLED", order.userId)
+                  }
                   className="cancel"
                   disabled={updateloading}
                 >
                   Cancel
                 </button>
                 {newAdded ? (
-                  <button onClick={()=> updateNewAdded(order._id,order.userId)} className="cancel">New Items Added</button>
+                  <button
+                    onClick={() => updateNewAdded(order._id, order.userId)}
+                    className="cancel"
+                  >
+                    New Items Added
+                  </button>
                 ) : (
                   ""
                 )}
