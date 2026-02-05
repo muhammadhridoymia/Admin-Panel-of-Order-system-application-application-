@@ -86,3 +86,20 @@ h2 {
 .message { background: #fd79a8; color: #fff; padding: 6px 10px; border-radius: 4px; }
 .voice { background: #6c5ce7; color: #fff; padding: 6px 10px; border-radius: 4px; }
 .bill { background: #fdcb6e; color: #fff; padding: 6px 10px; border-radius: 4px; }
+
+.loading-spinner-btn{
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid rgb(2, 2, 2);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

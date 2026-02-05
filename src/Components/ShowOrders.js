@@ -5,7 +5,6 @@ import "../Styles/ShowOrders.css";
 import { io } from "socket.io-client";
 
 function Orders() {
-
   //Socket
   const socket = io("http://localhost:5000");
 
@@ -16,27 +15,32 @@ function Orders() {
   const [newAdded, setNewAdded] = useState(false);
   const [startAuido, setStartAudio] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [updateloading, setupdateloading] = useState(false);
   const audioRef = useRef(null);
 
   const fetchOrders = async () => {
+    setLoading(true);
     try {
       const res = await fetch("http://localhost:5000/api/get/all/orders");
       const data = await res.json();
-      setOrders(data.orders || data);
+      if (data.success) {
+        setLoading(false);
 
-      const ordersData = data.orders || [];
-      setOrders(ordersData);
-      console.log(ordersData);
+        setOrders(data.orders || data);
 
-      const shouldRing = ordersData.some(
-        (order) =>
-          order.status !== "ACCEPTED" ||
-          order.items.some((item) => item.received === false),
-      );
+        const ordersData = data.orders || [];
+        setOrders(ordersData);
+        console.log(ordersData);
 
-      setNewAdded(shouldRing);
+        const shouldRing = ordersData.some(
+          (order) =>
+            order.status !== "ACCEPTED" ||
+            order.items.some((item) => item.received === false),
+        );
+
+        setNewAdded(shouldRing);
+      }
     } catch (error) {
       console.error("Failed to fetch orders", error);
     } finally {
@@ -47,9 +51,9 @@ function Orders() {
   useEffect(() => {
     fetchOrders();
     socket.emit("joinRoom", "admin");
-    socket.on("orderSubmited",()=>{
-      fetchOrders()
-    })
+    socket.on("orderSubmited", () => {
+      fetchOrders();
+    });
   }, []);
 
   useEffect(() => {
@@ -115,12 +119,14 @@ function Orders() {
     }
   };
 
-  if (loading) return <p>Loading orders...</p>;
+  // if (loading) return <p>Loading orders...</p>;
 
   return (
     <div className="orders-container">
       <h2>All Orders</h2>
-      <button onClick={Refresh}>Refresh</button>
+      <button onClick={Refresh}>
+        {loading ? <div className="loading-spinner-btn"></div> : "Refresh"}
+      </button>
       <audio ref={audioRef} src={Ring} loop />
 
       <table className="orders-table">
@@ -170,20 +176,22 @@ function Orders() {
 
               <td className="actions">
                 <button
+                disabled={updateloading}
                   onClick={() =>
                     updateStatus(order._id, "ACCEPTED", order.userId)
                   }
                   className="accept"
                 >
-                  Accept
+                  {updateloading? <div className="loading-spinner-btn"></div>:"Accept"}
                 </button>
                 <button
+                disabled={updateloading}
                   onClick={() =>
                     updateStatus(order._id, "COMPLETED", order.userId)
                   }
                   className="completed"
                 >
-                  Complete
+                  {updateloading ? <div className="loading-spinner-btn"></div>: "Complete"}
                 </button>
                 <button
                   onClick={() =>
@@ -192,14 +200,19 @@ function Orders() {
                   className="cancel"
                   disabled={updateloading}
                 >
-                  Cancel
+                  {updateloading ? <div className="loading-spinner-btn"></div>: "Cancel"}
                 </button>
                 {newAdded ? (
                   <button
+                  disabled={updateloading}
                     onClick={() => updateNewAdded(order._id, order.userId)}
                     className="cancel"
                   >
-                    New Items Added
+                    {updateloading ? (
+                      <div className="loading-spinner-btn"></div>
+                    ) : (
+                      "New Items Added"
+                    )}
                   </button>
                 ) : (
                   ""
