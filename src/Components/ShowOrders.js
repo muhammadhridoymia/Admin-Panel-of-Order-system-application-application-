@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Ring from "../Audio/ring.mp3";
 import "../Styles/ShowOrders.css";
-
+import MessagePopup from "../PopUp/MessagePopup";
+import BillPopup from "../PopUp/BillPopup";
 import { io } from "socket.io-client";
 
 function Orders() {
@@ -11,6 +12,10 @@ function Orders() {
   const sendUpdate = (userId) => {
     socket.emit("sendupdate", { userId });
   };
+
+  const [showMessagePopup, setMessagePopup] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showBillPopup, setShowBillPopup] = useState(false);
 
   const [newAdded, setNewAdded] = useState(false);
   const [startAuido, setStartAudio] = useState(false);
@@ -123,6 +128,20 @@ function Orders() {
 
   return (
     <div className="orders-container">
+      {showBillPopup && (
+        <BillPopup
+          order={selectedOrder}
+          close={() => setShowBillPopup(false)}
+        />
+      )}
+
+      {showMessagePopup && (
+        <MessagePopup
+          close={() => {
+            setMessagePopup(false);
+          }}
+        />
+      )}
       <h2>All Orders</h2>
       <button onClick={Refresh}>
         {loading ? <div className="loading-spinner-btn"></div> : "Refresh"}
@@ -176,22 +195,30 @@ function Orders() {
 
               <td className="actions">
                 <button
-                disabled={updateloading}
+                  disabled={updateloading}
                   onClick={() =>
                     updateStatus(order._id, "ACCEPTED", order.userId)
                   }
                   className="accept"
                 >
-                  {updateloading? <div className="loading-spinner-btn"></div>:"Accept"}
+                  {updateloading ? (
+                    <div className="loading-spinner-btn"></div>
+                  ) : (
+                    "Accept"
+                  )}
                 </button>
                 <button
-                disabled={updateloading}
+                  disabled={updateloading}
                   onClick={() =>
                     updateStatus(order._id, "COMPLETED", order.userId)
                   }
                   className="completed"
                 >
-                  {updateloading ? <div className="loading-spinner-btn"></div>: "Complete"}
+                  {updateloading ? (
+                    <div className="loading-spinner-btn"></div>
+                  ) : (
+                    "Complete"
+                  )}
                 </button>
                 <button
                   onClick={() =>
@@ -200,11 +227,15 @@ function Orders() {
                   className="cancel"
                   disabled={updateloading}
                 >
-                  {updateloading ? <div className="loading-spinner-btn"></div>: "Cancel"}
+                  {updateloading ? (
+                    <div className="loading-spinner-btn"></div>
+                  ) : (
+                    "Cancel"
+                  )}
                 </button>
                 {newAdded ? (
                   <button
-                  disabled={updateloading}
+                    disabled={updateloading}
                     onClick={() => updateNewAdded(order._id, order.userId)}
                     className="cancel"
                   >
@@ -220,13 +251,29 @@ function Orders() {
               </td>
 
               <td>
-                <button className="message">Message</button>
+                <button
+                  className="message"
+                  onClick={() => {
+                    setMessagePopup(true);
+                  }}
+                >
+                  Message
+                </button>
               </td>
               <td>
                 <button className="voice">Voice</button>
               </td>
               <td>
-                <button className="bill">Bill</button>
+                <button
+                  className="bill"
+                  onClick={() => {
+                    setSelectedOrder(order);
+                    setShowBillPopup(true);
+                  }}
+                >
+                  {" "}
+                  Bill
+                </button>
               </td>
             </tr>
           ))}
