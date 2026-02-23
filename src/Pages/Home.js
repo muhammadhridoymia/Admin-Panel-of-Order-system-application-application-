@@ -5,7 +5,7 @@ import Categories from "../Components/Categories";
 import PopularFoods from "../Components/PopularFoods";
 import DeactiveFoods from "../Components/DeactiveFoods";
 import Banners from "../Components/Banners";
-import Reviews from "../Components/Reviews";
+import Reviews from "../Components/Post";
 import Users from "../Components/Users";
 import OrderHistory from "../Components/OrderHistory";
 import DailySales from "../Components/DailySales";
@@ -22,7 +22,7 @@ function Home() {
     { key: "Popular", label: "Popular" },
     { key: "Deactive", label: "Deactive Foods" },
     { key: "Banner", label: "Banner" },
-    { key: "Reviews", label: "Reviews" },
+    { key: "Post", label: "Posts" },
     { key: "Users", label: "Users" },
     { key: "DailySales",label:"Daily Sales"}
   ];
@@ -36,7 +36,7 @@ function Home() {
       case "Popular": return <PopularFoods />;
       case "Deactive": return <DeactiveFoods />;
       case "Banner": return <Banners />;
-      case "Reviews": return <Reviews />;
+      case "Post": return <Reviews />;
       case "Users": return <Users />;
       case "DailySales": return <DailySales/>
       default: return null;
